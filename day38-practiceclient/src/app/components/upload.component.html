@@ -1,0 +1,16 @@
+<h1>Image Taken</h1>
+
+<div>
+    <img src="{{ photo }}">
+</div>
+<div>
+    <form [formGroup]="form">
+        <textarea name="comments" cols="90" rows="10" 
+            placeholder="Type here" formControlName="comments">
+        </textarea>
+    </form>
+</div>
+<div>
+    <button type="button" [routerLink]="['/']">Cancel</button>&nbsp;&nbsp;
+    <button type="button" (click)="upload()">Upload</button>
+</div>
