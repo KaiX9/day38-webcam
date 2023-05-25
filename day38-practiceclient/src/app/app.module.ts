@@ -27,7 +27,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     WebcamModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   providers: [PhotoService],
   bootstrap: [AppComponent]
