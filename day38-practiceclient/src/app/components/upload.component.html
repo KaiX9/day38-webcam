@@ -1,7 +1,7 @@
 <h1>Image Taken</h1>
 
 <div>
-    <img src="{{ photo }}">
+    <img [src]="photo" width="300">
 </div>
 <div>
     <form [formGroup]="form">
@@ -11,6 +11,6 @@
     </form>
 </div>
 <div>
-    <button type="button" [routerLink]="['/']">Cancel</button>&nbsp;&nbsp;
+    <button type="button" (click)="cancel()">Cancel</button>&nbsp;&nbsp;
     <button type="button" (click)="upload()">Upload</button>
 </div>

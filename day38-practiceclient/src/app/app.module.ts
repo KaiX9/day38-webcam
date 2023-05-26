@@ -9,10 +9,14 @@ import { PhotoComponent } from './components/photo.component';
 import { UploadComponent } from './components/upload.component';
 import { Routes, RouterModule } from '@angular/router';
 import { PhotoService } from './photo.service';
+import { PostComponent } from './components/post.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
 
 const routes: Routes = [
   { path: '', component: PhotoComponent },
   { path: 'upload', component: UploadComponent },
+  { path: 'post/:id', component: PostComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ]
 
@@ -20,14 +24,17 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     PhotoComponent,
-    UploadComponent
+    UploadComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     WebcamModule,
-    RouterModule.forRoot(routes, { useHash: true })
+    RouterModule.forRoot(routes, { useHash: true }),
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [PhotoService],
   bootstrap: [AppComponent]

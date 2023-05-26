@@ -5,8 +5,11 @@ import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,9 +25,13 @@ public class PhotoRepository {
     @Autowired
     private AmazonS3 s3;
 
-    public URL upload(String comments, MultipartFile file) throws IOException {
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    public static String key;
+
+    public URL upload(MultipartFile file) throws IOException {
         Map<String, String> userData = new HashMap<>();
-        userData.put("comments", comments);
         userData.put("filename", file.getOriginalFilename());
         userData.put("upload-date", (new Date()).toString());
 
@@ -33,7 +40,9 @@ public class PhotoRepository {
         metaData.setContentLength(file.getSize());
         metaData.setUserMetadata(userData);
 
-        PutObjectRequest putReq = new PutObjectRequest("kai", file.getOriginalFilename(), 
+        key = UUID.randomUUID().toString().substring(0, 8);
+
+        PutObjectRequest putReq = new PutObjectRequest("kai", key, 
             file.getInputStream(), metaData);
 
         putReq = putReq.withCannedAcl(CannedAccessControlList.PublicRead);
@@ -41,6 +50,18 @@ public class PhotoRepository {
         PutObjectResult result = s3.putObject(putReq);
         System.out.printf(">>> result: %s\n".formatted(result));
 
-        return s3.getUrl("kai", file.getOriginalFilename());
+        return s3.getUrl("kai", key);
+    }
+
+    public void saveToMongo(String comments) {
+
+        System.out.println("key: " + key);
+
+        Document doc = new Document();
+        doc.append("post_id", key);
+        doc.append("comments", comments);
+
+        mongoTemplate.insert(doc, "posts");
+
     }
 }

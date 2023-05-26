@@ -17,26 +17,34 @@ export class UploadComponent implements OnInit {
   form!: FormGroup
   fb = inject(FormBuilder)
   file!: File
+  id: string = ''
 
   ngOnInit(): void {
-    if (!this.photoSvc.photo) {
-      this.router.navigate([ '/' ]);
-      return;
+    if (this.photoSvc.photo) {
+      this.photo = this.photoSvc.photo;
+      this.form = this.createForm();
+      this.convertToFile(this.photo, 'photo').then(
+        file => {
+          console.info(file);
+          this.file = file;
+        }
+      );
+    } else {
+      this.file = this.photoSvc.file;
+      this.form = this.createForm();
     }
-    this.photo = this.photoSvc.photo;
-    this.form = this.createForm();
-    this.convertToFile(this.photo, 'photo').then(
-      file => {
-        console.info(file);
-        this.file = file;
-      }
-    );
+    
   }
 
   createForm(): FormGroup {
     return this.fb.group({
       comments: this.fb.control<string>('')
     });
+  }
+
+  cancel() {
+    this.photo = "";
+    this.router.navigate([ '/' ]);
   }
   
   upload() {
@@ -46,7 +54,10 @@ export class UploadComponent implements OnInit {
     firstValueFrom(this.photoSvc.upload(data['comments'], this.file))
       .then(result => {
         alert('uploaded')
-        this.router.navigate([ '/' ])
+        this.photo = ""
+        this.id = this.photoSvc.id;
+        console.info('>id at upload: ', this.id)
+        this.router.navigate([ '/post', this.id ])
       })
       .catch(err => {
         alert(JSON.stringify(err))

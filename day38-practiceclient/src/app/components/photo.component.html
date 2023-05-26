@@ -1,4 +1,7 @@
 <webcam [height]="300" [width]="300" *ngIf="showWebcam" [trigger]="trigger" 
   (imageCapture)="handleCapturedImage($event)"></webcam><br>
-<button type="button" (click)="toggleWebcam()">Toggle Webcam</button>&nbsp;&nbsp;
+<button type="button" (click)="toggleWebcam()" style="margin-right: 11%;">Toggle Webcam</button>
 <button type="button" (click)="snapshot()">SNAP!</button>
+<br><br>
+<input type="file" #uploadFile>
+<button type="button" (click)="submitFile()">Submit</button>
