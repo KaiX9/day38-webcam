@@ -3,11 +3,13 @@ package sg.edu.nus.iss.day38practiceserver.controller;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
+// import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.GetMapping;
 // import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.json.Json;
+// import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
+// import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
 import sg.edu.nus.iss.day38practiceserver.repository.PhotoRepository;
 import sg.edu.nus.iss.day38practiceserver.repository.PostRepository;
@@ -76,5 +80,19 @@ public class PhotoController {
             .contentType(MediaType.APPLICATION_JSON)
             .body(result.toString());
     }
+
+    // @GetMapping(path="/keylist")
+    // public ResponseEntity<String> getFiles() {
+    //     List<String> keyList = this.photoRepo.getFileFromS3();
+
+    //     JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+    //     for (String k : keyList) {
+    //         JsonObjectBuilder objBuilder = Json.createObjectBuilder();
+    //         objBuilder.add("imagePath", k);
+    //         arrBuilder.add(objBuilder.build());
+    //     }
+
+    //     return ResponseEntity.ok(arrBuilder.build().toString());
+    // }
      
 }

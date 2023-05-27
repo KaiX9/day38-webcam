@@ -2,8 +2,10 @@ package sg.edu.nus.iss.day38practiceserver.repository;
 
 import java.io.IOException;
 import java.net.URL;
+// import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+// import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -15,9 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+// import com.amazonaws.services.s3.model.GetObjectRequest;
+// import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
+// import com.amazonaws.services.s3.model.S3Object;
+// import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 @Repository
 public class PhotoRepository {
@@ -40,7 +46,7 @@ public class PhotoRepository {
         metaData.setContentLength(file.getSize());
         metaData.setUserMetadata(userData);
 
-        key = UUID.randomUUID().toString().substring(0, 8);
+        key = "images/%s".formatted(UUID.randomUUID().toString().substring(0, 8));
 
         PutObjectRequest putReq = new PutObjectRequest("kai", key, 
             file.getInputStream(), metaData);
@@ -64,4 +70,17 @@ public class PhotoRepository {
         mongoTemplate.insert(doc, "posts");
 
     }
+
+    // public List<String> getFileFromS3() {
+    //     ObjectListing objListing = s3.listObjects("kai", "images");
+    //     List<String> keys = new ArrayList<String>();
+    //     for (S3ObjectSummary objSummary : objListing.getObjectSummaries()) {
+    //         GetObjectRequest getReq = new GetObjectRequest("kai", 
+    //             objSummary.getKey());
+    //         S3Object result = s3.getObject(getReq);
+    //         keys.add(result.getKey());
+    //     }
+    //     System.out.println("keyList: " + keys);
+    //     return keys;
+    // }
 }

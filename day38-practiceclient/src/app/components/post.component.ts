@@ -2,6 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { PhotoService } from '../photo.service';
+import { Observable, Subscription } from 'rxjs';
+// import { Image } from '../models';
 
 @Component({
   selector: 'app-post',
@@ -13,6 +15,7 @@ export class PostComponent implements OnInit {
   id: string = ''
   title = inject(Title)
   imgStr: string = ''
+  // images$!: Observable<Image[]>
   comments: string = ''
   likeCounts: number = 0
   unlikeCounts: number = 0
@@ -23,7 +26,9 @@ export class PostComponent implements OnInit {
       this.id = this.activatedRoute.snapshot.params['id'];
       this.imgStr = 'https://kai.sgp1.digitaloceanspaces.com/' + this.id;
       this.title.setTitle(`Post: ${this.id}`);
+      // this.images$ = this.photoSvc.getAllImageFilesInAFolder();
       this.comments = this.photoSvc.comments;
+
   }
 
   likePost() {

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Observable, catchError, map, tap, throwError } from "rxjs";
+import { Observable, map } from "rxjs";
 import { Count } from "./models";
 
 const URL_PROXY = '/upload'
@@ -43,5 +43,9 @@ export class PhotoService {
 
         return this.http.post<any>(URL_COUNT, postCount);
     }
+
+    // getAllImageFilesInAFolder(): Observable<Image[]> {
+    //     return this.http.get<Image[]>('/keylist');
+    // }
 
 }

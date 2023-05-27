@@ -1,6 +1,10 @@
 <div>
+  <!-- <div class="grid-container" style="margin-top: 20px" *ngIf="images$ | async as im"> -->
   <div class="grid-container" style="margin-top: 20px">
     <img [src]="imgStr" width="300" /><br /><br />
+    <!-- <div *ngFor="let i of im">
+      <img [src]="'https://kai.sgp1.digitaloceanspaces.com/' + i.imagePath" width="300">
+    </div> -->
   </div>
   <div class="grid-container" style="margin-top: 30px">
     <h2>
